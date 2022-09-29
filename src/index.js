@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import { Provider } from "react-redux";
 import { rootReducer } from "./redux/rootReducer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
