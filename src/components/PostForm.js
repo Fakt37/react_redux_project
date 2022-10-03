@@ -1,10 +1,12 @@
-import { Component } from "react";
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import createPost from '../redux/action';
 
 class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
+      title: '',
     };
   }
 
@@ -12,11 +14,17 @@ class PostForm extends Component {
     event.preventDefault();
 
     const { title } = this.state;
+
+    if (!title.trim()) {
+      return;
+    }
+
     const newPost = {
       title,
       id: Date.now().toString(),
     };
-    this.setState({ title: "" });
+    this.props.createPost(newPost);
+    this.setState({ title: '' });
   };
 
   changeInputHandler = (event) => {
@@ -51,4 +59,8 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+const mapDispatchToProps = {
+  createPost,
+};
+
+export default connect(null, mapDispatchToProps)(PostForm);
